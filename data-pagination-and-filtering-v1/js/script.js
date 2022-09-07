@@ -10,8 +10,8 @@ For assistance:
    Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
-
-
+//Global scoped variables: 
+const itemsPerPage = 9; 
 
 /*
 Create the `showPage` function
@@ -19,69 +19,58 @@ This function will create and insert/append the elements needed to display a "pa
 */
 
 function showPage (list, page){
-   const itemsPerPage = 9; 
-   //created variables to store the starting & ending index
+   //created two variables to store the starting & ending index
    const startIndex = (page * itemsPerPage) - itemsPerPage; 
    const endIndex = (page * itemsPerPage); 
-   const studentList = document.querySelector('ul.student-list');
+   // selected element with class of 'student-list' and assigned it to variable
+   const studentList = document.querySelector('.student-list');
    studentList.innerHTML = ' '; 
-
-for (let i =0; i > list.length; i++){
-
-   if (i >= startIndex && i < endIndex){
-      function createElement(elementName, classValue){
-         const element = document.createElement(elementName); 
-         //added conditional statement for elements that do not have an associated classValue i.e., h3
-            if (classValue !== ''){
-               element.className = classValue; 
-            } 
-         return element
+//for loop for looping through each object in the 'list' data 
+   for (let i = 0; i < list.length; i++ ){
+      //if the items index matches critera, then code below runs
+      if( i >= startIndex && i < endIndex){
+         //since the creation of each element, each class, and the sources were lengthy. I used object literals to create each item needed w/o it becoming too complex. 
+      let studentItem = 
+      `<li class="student-item cf">
+        <div class="student-details">
+          <img class="avatar" src="${list[i].picture.medium}" alt="Profile Picture">
+          <h3>${list[i].name.first} ${list[i].name.last}</h3>
+          <span class="email">${list[i].email}</span>
+        </div>
+        <div class="joined-details">
+          <span class="date">Joined: ${list[i].registered.date}</span>
+        </div>
+      </li>
+      `; 
+      studentList.insertAdjacentHTML('beforeend', studentItem); 
       }
-
-      function appendElement(elementName, classValue){
-         const element = createElement(elementName, classValue); 
-         studentList.insertAdjacentHTML("beforeend", element); 
-         console.log(element); 
-      }
-
-      appendElement('li', 'student-item cf'); 
-      appendElement('div', 'student-details'); 
-      appendElement('img', 'avatar'); 
-      appendElement('h3', ''); 
-      appendElement('span', 'email'); 
-      appendElement('div', 'joined-details'); 
-      appendElement ('span', 'date');
    }
-
-
-
-//    <li class="student-item cf">
-//    <div class="student-details">
-//      <img class="avatar" src="https://randomuser.me/api/portraits/women/25.jpg" alt="Profile Picture">
-//      <h3>Ethel Dean</h3>
-//      <span class="email">ethel.dean@example.com</span>
-//    </div>
-//    <div class="joined-details">
-//      <span class="date">Joined 12-15-2005</span>
-//    </div>
-//  </li>
-
-
-   
-
 }
 
-
-}
-
-
+// showPage(data,1); 
 
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 
-function addPagination(){
+function addPagination(list){
+   //variable for calculating pages required
+   const numOfPages = Math.ceil(list.length/itemsPerPage); 
+   //selecting the element with a class of '.link-list' 
+   const linkedList = document.querySelector('.link-list');
+   linkedList.innerHTML = ''; 
+   //for loop that creates buttons for each page needed for objects
+   for (let i = 1; i <= numOfPages; i++ ){
+      let button = `
+      <li>
+         <button type="button">${i}</button>
+      </li>
+      `;
+      linkedList.insertAdjacentHTML('beforeend', button); 
+   }
+
+
 
 
 
@@ -90,3 +79,5 @@ function addPagination(){
 
 
 // Call functions
+showPage(data,1); 
+addPagination(data); 
