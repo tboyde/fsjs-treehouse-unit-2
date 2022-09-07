@@ -4,7 +4,6 @@ FSJS Project 2 - Data Pagination and Filtering
 */
 
 
-
 /*
 For assistance:
    Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
@@ -12,7 +11,6 @@ For assistance:
 */
 //Global scoped variables: 
 const itemsPerPage = 9; 
-
 /*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
@@ -69,13 +67,25 @@ function addPagination(list){
       `;
       linkedList.insertAdjacentHTML('beforeend', button); 
    }
+   //selects first button element and assigns active class
+   document.querySelector('button').className = 'active'; 
+   //created event listener for when user clicks page buttons
+   linkedList.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON'){
+         let activeBtn = document.querySelector('.active'); 
+         //adding in varibles to identify button target and value
+         let targetBtn = e.target; 
+         let pageNum = targetBtn.textContent; 
+         //removing 'active' class from button 
+         activeBtn.className = ''; 
+         //add active class to button
+         targetBtn.className = 'active'; 
+         //call the showPage function passing the 'list' as a parameter and page to display as arguments
+         showPage(list, pageNum); 
+      }
 
-
-
-
-
-}
-
+   })
+}; 
 
 
 // Call functions
